@@ -6,12 +6,10 @@ import SPAR from '../assets/ServicesIMG/SPAR.jpg'
 import SkinCare from '../assets/ServicesIMG/SkinCare.jpg'
 import WT from '../assets/ServicesIMG/WT.jpg'
 import NailCare from '../assets/ServicesIMG/NailCare.jpg'
+import Btn from '../components/btn'
 
 function Services() {
-  const navigate = useNavigate();
-  const handleBookNow = () => {
-    navigate('/contact'); // Redirect to the Contact page
-  };
+  
   return (
     <div className="bg-yellow-100 py-12 px-6">
       <div className="max-w-6xl mx-auto text-center">
@@ -40,12 +38,7 @@ function Services() {
               <li>Keratin and Smoothening Treatments</li>
               <li>Hair Styling for Events</li>
             </ul>
-            <button
-          onClick={handleBookNow}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-200 mt-4"
-        >
-          Book Now
-        </button>
+            <Btn />
           </div>
         </div>
 
@@ -64,12 +57,7 @@ function Services() {
               <li>Acne Reduction Services</li>
               <li>Hydrating Masks</li>
             </ul>
-            <button
-          onClick={handleBookNow}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-200 mt-4"
-        >
-          Book Now
-        </button>
+            <Btn/>
           </div>
         </div>
 
@@ -88,12 +76,7 @@ function Services() {
               <li>Natural and Glam Looks</li>
               <li>Makeup Consultation</li>
             </ul>
-            <button
-          onClick={handleBookNow}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-200 mt-4"
-        >
-          Book Now
-        </button>
+              <Btn/>
           </div>
         </div>
 
@@ -112,12 +95,7 @@ function Services() {
               <li>Foot Spa and Reflexology</li>
               <li>Stress-Relief Packages</li>
             </ul>
-            <button
-          onClick={handleBookNow}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-200 mt-4"
-        >
-          Book Now
-        </button>
+              <Btn/>
           </div>
         </div>
 
@@ -135,12 +113,7 @@ function Services() {
               <li>Nail Art and Extensions</li>
               <li>Gel Polish and Regular Polish</li>
             </ul>
-            <button
-          onClick={handleBookNow}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-200 mt-4"
-        >
-          Book Now
-        </button>
+            <Btn/>
           </div>
         </div>
 
@@ -158,12 +131,7 @@ function Services() {
               <li>Eyebrow Threading</li>
               <li>Hair Removal Packages</li>
             </ul>
-            <button
-          onClick={handleBookNow}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-200 mt-4"
-        >
-          Book Now
-        </button>
+            <Btn/>
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import Makeup  from '../assets/ServicesIMG/Makeup.jpeg'
 import SPAR from '../assets/ServicesIMG/SPAR.jpg'
 import SkinCare from '../assets/ServicesIMG/SkinCare.jpg'
 import WT from '../assets/ServicesIMG/WT.jpg'
+import Btn from "../components/btn";
 
 
 const App = () => {
@@ -38,12 +39,7 @@ const App = () => {
         <p className="text-xl mt-4 text-gray-600">
           Where beauty meets relaxation. Let us pamper you!
         </p>
-        <button
-          onClick={handleBookNow}
-          className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg shadow-lg transition duration-200"
-        >
-          Book Now
-        </button>
+        <Btn/>
       </header>
 
       
