@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext'; 
+import axios from 'axios';
 
-const SignIn = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+const SignUp = () => {
+  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
 
-    // Validate user credentials
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(
-      (u) => u.email === formData.email && u.password === formData.password
-    );
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/user/ragister', formData);
 
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-      login(); 
-      alert('Sign-In Successful!');
-      navigate('/');
-    } else {
-      alert('Invalid Email or Password');
+      if (response.data.success) {
+        alert(response.data.message);
+        navigate('/signin');
+      } else {
+        setError(response.data.message);
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'An error occurred. Please try again.');
     }
   };
 
@@ -34,10 +33,25 @@ const SignIn = () => {
     <div className="min-h-screen flex items-center justify-center bg-yellow-100">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
-          Sign In to Your Account
+          Create Your Account
         </h2>
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Email Input */}
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-600 mb-1">
+              Username
+            </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter your username"
+              value={formData.username}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:outline-none"
+              required
+            />
+          </div>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1">
               Email Address
@@ -53,8 +67,6 @@ const SignIn = () => {
               required
             />
           </div>
-
-          {/* Password Input */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-1">
               Password
@@ -63,32 +75,28 @@ const SignIn = () => {
               type="password"
               name="password"
               id="password"
-              placeholder="Enter your password"
+              placeholder="Create a password"
               value={formData.password}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:outline-none"
               required
             />
           </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
           >
-            Sign In
+            Sign Up
           </button>
         </form>
-
-        {/* Footer Links */}
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
+            Already have an account?{' '}
             <button
-              onClick={() => navigate('/signup')}
+              onClick={() => navigate('/signin')}
               className="text-blue-500 hover:underline font-medium"
             >
-              Sign Up
+              Sign In
             </button>
           </p>
         </div>
@@ -97,6 +105,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
-
-                                      // @NavinMalakarCreation
+export default SignUp;

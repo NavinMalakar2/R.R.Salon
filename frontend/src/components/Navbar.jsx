@@ -18,6 +18,9 @@ const Navbar = () => {
     alert('Logged out successfully');
     navigate('/signin');
     setIsMenuOpen(false); // Close the menu on logout
+    
+    
+
   };
 
   const handleBookNow = () => {
@@ -105,5 +108,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-                                      // @NavinMalakarCreation

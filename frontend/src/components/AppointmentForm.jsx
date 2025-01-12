@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import axios to make API requests
 
 const AppointmentForm = () => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    mobileNumber: '',
     dateTime: '',
     teamMember: '',
   });
@@ -43,30 +44,29 @@ const AppointmentForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-    const selectedSlot = `${formData.dateTime}`;
+    // Prepare the booking data to send to the backend
+    const bookingData = {
+      username: formData.name,
+      mobileNumber: formData.mobileNumber,
+      slot: formData.dateTime,
+      employe: formData.teamMember,
+    };
 
-    // Check if the selected slot is already booked
-    const isSlotTaken = appointments.some(
-      (appointment) =>
-        appointment.dateTime === selectedSlot &&
-        appointment.teamMember === formData.teamMember
-    );
+    try {
+      // Send the booking data to the backend using axios
+      const response = await axios.post('http://localhost:8000/api/v1/user/book', bookingData);
 
-    if (isSlotTaken) {
-      alert('The selected slot is already booked. Please choose another.');
-      return;
+      if (response.status === 201) {
+        alert('Appointment booked successfully!');
+        setFormData({ name: '', mobileNumber: '', dateTime: '', teamMember: '' }); // Reset form
+      }
+    } catch (error) {
+      // Handle errors, such as when the slot is already booked
+      alert(error.response?.data?.message || 'An error occurred while booking the appointment.');
     }
-
-    // Add the appointment
-    appointments.push(formData);
-    localStorage.setItem('appointments', JSON.stringify(appointments));
-
-    alert('Appointment booked successfully!');
-    setFormData({ name: '', email: '', dateTime: '', teamMember: '' }); // Reset form
   };
 
   return (
@@ -86,12 +86,14 @@ const AppointmentForm = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-1">Email</label>
+          <label className="block text-sm font-medium text-gray-600 mb-1">Number</label>
           <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            value={formData.email}
+            type="tel" 
+            id="mobile" 
+            name="mobile" 
+            pattern="[0-9]{10}"
+            placeholder="Enter your Mobile Number"
+            value={formData.mobileNumber}
             onChange={handleChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:outline-none"
             required
@@ -143,7 +145,3 @@ const AppointmentForm = () => {
 };
 
 export default AppointmentForm;
-
-                                      // @NavinMalakarCreation
-
-
