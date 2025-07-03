@@ -20,25 +20,51 @@ const AppointmentForm = () => {
     generateAvailableSlots();
   }, []);
 
-  const generateAvailableSlots = () => {
-    // Create time slots for today and tomorrow in 1-hour intervals
-    const slots = [];
-    const now = new Date();
-    const today = new Date(now.setHours(0, 0, 0, 0));
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
+  // const generateAvailableSlots = () => {
+  //   // Create time slots for today and tomorrow in 1-hour intervals
+  //   const slots = [];
+  //   const now = new Date();
+  //   const today = new Date(now.setHours(0, 0, 0, 0));
+  //   const tomorrow = new Date(today);
+  //   tomorrow.setDate(today.getDate() + 1);
 
-    [today, tomorrow].forEach((day) => {
-      for (let hour = 9; hour <= 18; hour++) {
+  //   [today, tomorrow].forEach((day) => {
+  //     for (let hour = 9; hour <= 18; hour++) {
+  //       slots.push({
+  //         date: day.toISOString().split('T')[0],
+  //         time: `${hour}:00`,
+  //       });
+  //     }
+  //   });
+
+  //   setAvailableSlots(slots);
+  // };
+const generateAvailableSlots = () => {
+  const slots = [];
+  const now = new Date(); // current datetime
+  const today = new Date(now.setHours(0, 0, 0, 0));
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  const days = [today, tomorrow];
+
+  days.forEach((day) => {
+    for (let hour = 9; hour <= 18; hour++) {
+      const slotTime = new Date(day);
+      slotTime.setHours(hour, 0, 0, 0); // exact hour
+
+      // ✅ Only allow future time for today
+      if (slotTime > new Date()) {
         slots.push({
-          date: day.toISOString().split('T')[0],
-          time: `${hour}:00`,
+          date: slotTime.toISOString().split('T')[0],
+          time: `${hour.toString().padStart(2, '0')}:00`,
         });
       }
-    });
+    }
+  });
 
-    setAvailableSlots(slots);
-  };
+  setAvailableSlots(slots);
+};
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -85,7 +111,7 @@ const AppointmentForm = () => {
             required
           />
         </div>
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">Number</label>
           <input
             type="tel" 
@@ -98,7 +124,24 @@ const AppointmentForm = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:outline-none"
             required
           />
-        </div>
+        </div> */}
+        <div>
+  <label className="block text-sm font-medium text-gray-600 mb-1">Number</label>
+  <input
+    type="tel"
+    id="mobile"
+    name="mobileNumber"
+    pattern="[0-9]{10}"
+    inputMode="numeric"
+    maxLength={10}
+    placeholder="Enter your Mobile Number"
+    value={formData.mobileNumber}
+    onChange={handleChange}
+    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:outline-none"
+    required
+  />
+</div>
+
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">Preferred Date & Time</label>
           <select
@@ -109,11 +152,23 @@ const AppointmentForm = () => {
             required
           >
             <option value="">Select a date & time</option>
-            {availableSlots.map((slot, index) => (
+            {/* {availableSlots.map((slot, index) => (
               <option key={index} value={`${slot.date} ${slot.time}`}>
-                {slot.date} - {slot.time}
+               
               </option>
-            ))}
+            ))} */}
+            {availableSlots.map((slot, index) => (
+  <option key={index} value={`${slot.date} ${slot.time}`}>
+    {new Date(`${slot.date}T${slot.time}`).toLocaleString('en-IN', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    })}
+  </option>
+))}
           </select>
         </div>
         <div>

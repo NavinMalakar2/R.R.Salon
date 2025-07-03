@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 
 const bookingSchema= new mongoose.Schema({
     username:{type:String, required:true},
-    email: {type: String, required:true},
+    // email: {type: String, required:true},
+    mobileNumber:{type:Number,required:true},
     slot: {type: String, required:true},
     employe: {type: String, required:true},
     

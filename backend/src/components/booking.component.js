@@ -4,7 +4,7 @@ import UserBooking from '../models/booking.model.js';
 const BookingService = async (req, res) => {
   try {
     const { username, mobileNumber, slot, employe } = req.body; // Use req.body
-    console.log(username, mobileNumber, slot, employe);
+    // console.log(username, mobileNumber, slot, employe);
 
     // Check if a booking already exists for the same slot and employee
     const existingBooking = await UserBooking.findOne({ slot, employe });

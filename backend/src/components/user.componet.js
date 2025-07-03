@@ -7,13 +7,13 @@ export const ragistration = async (req,res)=>{
     
     try {
         const {username, email, password}= req.body;
-        console.log(username, email, password);
+        // console.log(username, email, password);
         if(!username || !email || !password){
             return res.status(400).json({message:'somting is missing',success:true});
         }
         const user =await User.findOne({email})
         if(user){
-            return res.status(400).json({message:'User already exists try with diffrent mail',success:false});
+            return res.status(400).json({message:'User already exists try with diffrent mail /LOGIN ',success:false});
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         await User.create({
