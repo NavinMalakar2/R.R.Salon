@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173/", // ✅ replace with real frontend
+    origin: "https://r-r-salon-navin-malakars-projects.vercel.app/", // ✅ replace with real frontend
     credentials: true,
   })
 );
