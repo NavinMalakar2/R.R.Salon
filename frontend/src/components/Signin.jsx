@@ -18,7 +18,7 @@ const SignIn = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/user/login', formData);
+      const response = await axios.post('https://r-r-salon.onrender.com/api/v1/user/login', formData);
       if (response.data.success) {
         // Store token in localStorage for session management
         localStorage.setItem('token', response.data.token);

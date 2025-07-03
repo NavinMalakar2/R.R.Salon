@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 // import App from './App.css'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -10,6 +10,7 @@ import SignIn from './components/Signin';
 import SignUp from './components/SignUP';
 import Footer from './components/Footer';
 import { AuthProvider } from './components/AuthContext';
+
 
 
 

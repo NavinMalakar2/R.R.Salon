@@ -8,7 +8,12 @@ dotenv.config();
 
 // Initialize app
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173/", // ✅ replace with real frontend
+    credentials: true,
+  })
+);
 // Middleware for parsing JSON
 app.use(express.json());
 
